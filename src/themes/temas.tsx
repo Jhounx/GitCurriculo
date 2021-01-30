@@ -2,7 +2,7 @@ import {DefaultTheme} from "styled-components"
 
 interface IThemes {
   light: DefaultTheme,
-  // dark: DefaultTheme,
+  dark: DefaultTheme,
   [key: string]: any;
 }
 
@@ -132,7 +132,7 @@ const Temas: IThemes = {
         link: {
           color: "#ced4ee",
           hover: "#88b1e7",
-          
+          separador: "#ffffff"
         }
       }
     },
@@ -143,7 +143,7 @@ const Temas: IThemes = {
     },
     webKit: {
       track: {
-        color: "#ffffff00"
+        color: "rgba(255, 255, 255, 0.001)"
       },
       handle: {
         color: "rgba(255, 255, 255, 0.514)",

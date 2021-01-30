@@ -15,7 +15,7 @@ import {
 } from "./styles"
 
 const App: React.FC = () => {
-  const [theme, setTheme] = usePeristedState('theme', 'light')
+  const [theme, setTheme] = usePeristedState("theme", "light")
   const tema: DefaultTheme = Temas[theme]
   return (
     <ThemeProvider theme={tema}>

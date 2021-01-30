@@ -1,11 +1,10 @@
 import React, {memo, useState, useEffect} from "react"
 import {Container, StatusBar, StatusBarTitle, Text} from "./styles"
 import {IconType} from "react-icons/lib";
-import * as Icons from "react-icons/fa";
 
 export type I_SKILL = {
   tecnologia: string,
-  icon: string,
+  icon: IconType,
   skill: number,
 }
 
@@ -14,11 +13,9 @@ const SkillContainer: React.FC<I_SKILL> = (props) => {
   useEffect(() => {
     setWidth(String(props.skill));
   }, [props.skill]);
-  //@ts-ignore
-  const Icon:IconType = Icons[props.icon]
   return (
     <Container>
-      <Icon size={50} />
+      <props.icon size={50} />
       <StatusBar>
         <StatusBarTitle>{props.tecnologia}</StatusBarTitle>
         <div id="progressBar">
