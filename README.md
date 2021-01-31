@@ -10,8 +10,8 @@ Apenas baixe o Node e execute os seguintes comandos
 npm install
 npm run build
 ```
-## Créditos
-O então projeto foi forkado a partir do projeto de [Jhounx](https://github.com/Jhounx/github-page)
+## Principais Contribuidores: 
+[Jhounx](https://github.com/Jhounx) [Pedro Mota](https://github.com/pedrocmota)
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
