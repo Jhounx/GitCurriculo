@@ -11,7 +11,7 @@ npm install
 npm run build
 ```
 ## Principais Contribuidores: 
-[Jhounx](https://github.com/Jhounx) [Pedro Mota](https://github.com/pedrocmota)
+[Jhounx](https://github.com/Jhounx)  e  [Pedro Mota](https://github.com/pedrocmota)
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
