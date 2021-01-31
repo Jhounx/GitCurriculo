@@ -1,202 +1,101 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import {ThemeProvider, DefaultTheme} from "styled-components"
+import {v4 as uuidv4} from "uuid"
+import {FaGithub, FaRegEnvelope, FaLinkedin} from "react-icons/fa";
+import {BsMoon} from "react-icons/bs"
+import Switch from "react-switch"
+import Temas from "./themes/temas"
+import usePeristedState from "./hooks/usePeristedState"
+import SkillContainer from "./components/skills/SkillContainer"
+import Title from "./components/Title"
+import Conteudo from "./conteudo"
+import Projeto from "./components/projeto/Projeto"
 import {
-  FaGithub,
-  FaRegEnvelope,
-  FaLinkedin,
-  FaJsSquare,
-  FaPython,
-  FaReact,
-  FaCss3Alt,
-  FaCode,
-  FaLinux,
-  FaBars
-} from "react-icons/fa";
-import "./App.css";
+  GlobalStyle, Main, Circle, Sidebar, Menu, Contatos, ChangeTheme, Dash, MoonIcon
+} from "./styles"
 
-function App() {
-
+const App: React.FC = () => {
+  const [theme, setTheme] = usePeristedState("theme", "light")
+  const tema: DefaultTheme = Temas[theme]
   return (
-    <>
-      <div className="circle1" />
-      <div className="circle2" />
-      <main>
-        <div className="sideBar">
-          <div className="menu">
+    <ThemeProvider theme={tema}>
+      <GlobalStyle />
+      <Circle className="circle1" />
+      <Circle className="circle2" />
+      <Main>
+        <Sidebar>
+          <Menu>
             <img
-              id="profileImage"
-              src="https://avatars.githubusercontent.com/u/32176772?s=460&u=7baa48690d4f8231cfa006254c23ce7a53e101f9&v=4"
+              src={Conteudo.icon}
               alt="profile"
             />
-            <div className="personText">
-              <h1>João Costa</h1>
-              <h2>FullStack Developer</h2>
+            <div>
+              <h1 className="nome">{Conteudo.nome}</h1>
+              <h2 className="profissao">{Conteudo.profissao}</h2>
             </div>
-          </div>
-          
-          <div className="contacts">
-            <a href="https://github.com/Jhounx" className="ContactButton">
-              <FaGithub size={40} color="#426696" />
-              <div className="contactText">
-                <h2>Projects</h2>
+          </Menu>
+          <Contatos>
+            <a href={Conteudo.git}>
+              <FaGithub size={40} />
+              <div>
+                <h2>Projetos</h2>
               </div>
             </a>
-            <a
-              href="https://www.linkedin.com/in/joaocosta121/"
-              className="ContactButton"
-            >
-              <FaLinkedin size={40} color="#426696" />
-              <div className="contactText">
+            <a href={Conteudo.linkdin}>
+              <FaLinkedin size={40} />
+              <div>
                 <h2>Linkedin</h2>
               </div>
             </a>
-            <a
-              href="mailto:joaocosta_neto@hotmail.com"
-              className="ContactButton"
-            >
-              <FaRegEnvelope size={40} color="#426696" />
-              <div className="contactText">
-                <h2>Contact</h2>
+            <a href={Conteudo.email}>
+              <FaRegEnvelope size={40} />
+              <div>
+                <h2>Contato</h2>
               </div>
             </a>
-          </div>
-        </div>
-        <div className="dash">
+          </Contatos>
+          <ChangeTheme>
+            <Switch
+              onChange={() => {
+                if (theme === "light") setTheme("dark")
+                if (theme === "dark") setTheme("light")
+              }}
+              checked={theme === "dark"}
+              className="react-switch"
+              checkedHandleIcon={<MoonIcon><BsMoon/></MoonIcon>}
+              onColor={tema.changeTheme.track}
+              offColor={tema.changeTheme.track}
+              checkedIcon={false}
+              uncheckedIcon={false}
+            />
+          </ChangeTheme>
+        </Sidebar>
+        <Dash>
           <Title label="Skills" />
-          <div className="skillContainer">
-            <FaJsSquare size={50} color="#426696" />
-            <Statusbar size={85} name="Javascript" />
-          </div>
-          <div className="skillContainer">
-            <FaPython size={50} color="#426696" />
-            <Statusbar size={80} name="Python" />
-          </div>
-          <div className="skillContainer">
-            <FaReact size={50} color="#426696" />
-            <Statusbar size={65} name="ReactJS" />
-          </div>
-          <div className="skillContainer">
-            <FaCss3Alt size={50} color="#426696" />
-            <Statusbar size={70} name="CSS" />
-          </div>
+          {Conteudo.skils.map((tech) => (
+            <SkillContainer key={uuidv4()} tecnologia={tech.tecnologia}
+              icon={tech.icon} skill={tech.skill} />
+          ))}
+          <div className="divisor" />
 
-          <div className="skillContainer">
-            <FaLinux size={50} color="#426696" />
-            <Statusbar size={80} name="Linux" />
-          </div>
+          <Title label="Projetos" />
 
-          <div style={{ border: "1px solid #99b6dd", margin: "60px 0px" }} />
-
-          <Title label="Projects" />
-
-          <div className="projectContainer">
-            <h2>
-              SiGAÊ - Sistema de Gerenciamento de Atendimento ao Estudante
-            </h2>
-            <h3>
-              Oferecimento: <b>Intituto Federal da Bahia - IFBA</b>
-            </h3>
-            <h3>
-              Numero de Participantes: <b>4 Pessoas</b>
-            </h3>
-            <h3>
-              Tecnologias: <b>ReactJS + NodeJS</b>
-            </h3>
-            <textarea contentEditable="false" disabled>
-              O projeto foi baseado na construção do SiGAÊ, Sistema de
-              Gerenciamento de Atendimento ao Estudante, cujo objetivo foi
-              aprimorar e simplificar os agendamentos de atendimentos e
-              monitorias acadêmicas. O sistema permitirá que os docentes e
-              monitores possam agendar com bastante antecedência os seus
-              horários de atendimento, determinando também a sala e a
-              matéria/disciplina do atendimento ou monitoria. Os discentes
-              poderão visualizar todos os atendimentos disponíveis e, caso de
-              seu interesse, podem se inscrever em um. A lista de discentes
-              inscritos ficará disponível para o respectivo docente ou monitor,
-              que poderá submeter a presença ou não dos seus alunos em seu
-              atendimento. Os alunos poderão confirmar a sua presença algumas
-              horas antes do início do atendimento, com o objetivo de confirmar
-              ao professor ou monitor sobre a realização do atendimento.
-            </textarea>
-            <h5>
-              <a href="https://suap.ifba.edu.br/comum/baixar_documento/5a76a2521905a4513eff1361ff332adf9bfe5807/">
-                Certificado de Conclusão
-              </a>
-            </h5>
-          </div>
-          <div className="projectContainer">
-            <h2>Triangular COVID</h2>
-            <h3>
-              Tecnologias: <b>React-Native + NodeJS</b>
-            </h3>
-            <textarea contentEditable="false" disabled>
-              O projeto consiste em um aplicativo que lhe permite visualizar e
-              reportar aglomerações de pessoas na sua localidade com a
-              finalidade de combate ao COVID-19. Ao reportar você precisa tirar
-              uma foto da localidade que será enviada para o servidor e
-              verificada, se a informação for veridica, o local a qual reportou
-              irá aparecer como um ponto no mapa para todas as outras pessoas
-              que acessarem o aplicativo.
-            </textarea>
-            <h5>
-              <a href="https://github.com/Jhounx/Triangular">
-                Link GitHub
-              </a>
-            </h5>
-          </div>
-          <div className="projectContainer">
-            <h2>Jogo da Velha Online</h2>
-            <h3>
-              Tecnologias: <b>NodeJS + SocketIO + Jquery</b>
-            </h3>
-            <textarea contentEditable="false" disabled>
-              Projeto feito quando estava a aprender NodeJS sendo o meu primeiro
-              projeto com a tecnologia e o que fez eu me encantar por ela. O
-              codigo bem iniciante e sem o minimo de organização e design patern
-              fazem-me ver a minha visivel evolução com a tecnologia comparado
-              aos dias de hoje .
-            </textarea>
-            <h5>
-              <a href="https://github.com/Jhounx/Node-Jogo-da-Velha">
-                Link GitHub
-              </a>
-            </h5>
-          </div>
-          
-        </div>
-      </main>
-    </>
+          {Conteudo.projetos.map((projeto) => (
+            <Projeto
+              key={uuidv4()}
+              nome={projeto.nome}
+              oferecimento={projeto.oferecimento}
+              participantes={projeto.participantes}
+              tecnologias={projeto.tecnologias}
+              certificado={projeto.certificado}
+              linkGit={projeto.linkGit}
+              texto={projeto.texto}
+            />
+          ))}
+        </Dash>
+      </Main>
+    </ThemeProvider>
   );
 }
-
-const Statusbar: React.FC<{ size: number; name: string }> = ({
-  size,
-  name,
-}) => {
-  const [width, setWidth] = useState("0");
-  useEffect(() => {
-    setWidth(String(size));
-  }, []);
-
-  return (
-    <>
-      <div className="statusBar">
-        <p className="statusBarTitle">{name}</p>
-        <div id="progressBar">
-          <div id="line" style={{ width: width + "%" }} />
-        </div>
-      </div>
-      <p id="insideText">{size}%</p>
-    </>
-  );
-};
-
-const Title: React.FC<{ label: string }> = ({ label }) => {
-  return (
-    <div className="dashTitle">
-      <FaCode size={50} color="#426696" />
-      <h1 style={{ marginLeft: 30 }}>{label}</h1>
-    </div>
-  );
-};
 
 export default App;
